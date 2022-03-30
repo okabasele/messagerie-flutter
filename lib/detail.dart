@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projetb2c/model/Utilisateur.dart';
+import 'model/Utilisateur.dart';
 
 class detail extends StatefulWidget{
   Utilisateur user;

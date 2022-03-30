@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:projetb2c/MyWidgets/menuDrawer.dart';
-import 'package:projetb2c/detail.dart';
-import 'package:projetb2c/functions/FirestoreHelper.dart';
-import 'package:projetb2c/model/Utilisateur.dart';
+import 'MyWidgets/menuDrawer.dart';
+import 'detail.dart';
+import 'functions/FirestoreHelper.dart';
+import 'model/Utilisateur.dart';
 
 class dashBoard extends StatefulWidget{
   @override

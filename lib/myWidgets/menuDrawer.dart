@@ -3,8 +3,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:projetb2c/functions/FirestoreHelper.dart';
-import 'package:projetb2c/model/Utilisateur.dart';
+import '/functions/FirestoreHelper.dart';
+import '/model/Utilisateur.dart';
 import 'package:file_picker/file_picker.dart';
 
 class myDrawer extends StatefulWidget{

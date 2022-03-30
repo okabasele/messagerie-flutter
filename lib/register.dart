@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projetb2c/functions/FirestoreHelper.dart';
+import 'functions/FirestoreHelper.dart';
 
 class register extends StatefulWidget{
   @override
