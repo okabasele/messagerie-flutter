@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:messagerie_flutter/dashboard.dart';
 import 'functions/FirestoreHelper.dart';
+import 'myWidgets/popUp.dart';
 
 class register extends StatefulWidget{
   @override
@@ -22,11 +24,17 @@ class registerState extends State<register>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Inscription"),
+        iconTheme: IconThemeData(
+          color: Color(0xFFFF0844),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
       ),
       body:Container(
         padding: EdgeInsets.all(20),
-        child:  bodyPage(),
+        child: SingleChildScrollView(
+            child:bodyPage()
+        ),
       )
 
     );
@@ -36,24 +44,109 @@ class registerState extends State<register>{
   Widget bodyPage(){
     return Column(
       children: [
+        //Texte de bienvenue
+        Container(
+          alignment: Alignment.centerLeft,
+          child:  Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Inscription",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                ),
+              ),
+              Text("Créez un compte gratuitement."),
+            ],
+          ),
+        ),
         SizedBox(height: 20,),
+
+        //Nom de famille
+        TextField(
+          cursorColor: Color(0xFFFF0844),
+
+          onChanged: (value){
+            setState(() {
+              nom = value;
+            });
+          },
+          decoration: InputDecoration(
+              hintText: "Entrer votre nom",
+              filled: true,
+              fillColor: Colors.white,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0xFFFF0844),
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0xFFFF0844),
+                ),
+                borderRadius: BorderRadius.circular(10),
+              )
+          ),
+        ),
+        SizedBox(height: 20,),
+
+        //Prénom
+        TextField(
+          onChanged: (value){
+            setState(() {
+              prenom = value;
+            });
+          },
+          decoration: InputDecoration(
+              hintText: "Entrer votre prenom",
+              filled: true,
+              fillColor: Colors.white,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0xFFFF0844),
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0xFFFF0844),
+                ),
+                borderRadius: BorderRadius.circular(10),
+              )
+          ),
+        ),
+        SizedBox(height: 20,),
+
+        //Adresse mail
         TextField(
           onChanged: (value){
             setState(() {
               mail = value;
             });
-
           },
           decoration: InputDecoration(
               hintText: "Entrer votre adresse mail",
               filled: true,
               fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0xFFFF0844),
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0xFFFF0844),
+                ),
+                borderRadius: BorderRadius.circular(10),
               )
           ),
         ),
         SizedBox(height: 20,),
+
+        //Mot de passe
         TextField(
           onChanged: (value){
             setState(() {
@@ -65,56 +158,45 @@ class registerState extends State<register>{
               hintText: "Entrer votre mot de passe",
               filled: true,
               fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0xFFFF0844),
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0xFFFF0844),
+                ),
+                borderRadius: BorderRadius.circular(10),
               )
           ),
         ),
         SizedBox(height: 20,),
-        TextField(
-          onChanged: (value){
-            setState(() {
-              nom = value;
-            });
-          },
-          decoration: InputDecoration(
-              hintText: "Entrer nom",
-              filled: true,
-              fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-              )
-          ),
-        ),
-        SizedBox(height: 20,),
-        TextField(
-          onChanged: (value){
-            setState(() {
-              prenom = value;
-            });
-          },
-          decoration: InputDecoration(
-              hintText: "Entrer prénom",
-              filled: true,
-              fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-              )
-          ),
-        ),
-        SizedBox(height: 20,),
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                primary: Colors.amber,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)
-                )
-            ),
-            onPressed: (){
 
-              FirestoreHelper().inscription(mail: mail, password: password, prenom: prenom,nom: nom);
-            },
-            child: Text("Inscription")
+        //Bouton d'inscription
+        Container(
+            width: MediaQuery.of(context).size.width,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.all(10.0),
+              primary: Color(0xFFFF0844),
+              shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              )),
+              onPressed: (){
+                FirestoreHelper().inscription(mail: mail, password: password, prenom: prenom,nom: nom).then((value) {
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context){
+                        return dashBoard();
+                      }
+                  ));
+                }).catchError((error){
+                  myPopUp(text: "Votre adresse mail est déjà utilisée. Veuillez réessayer.",);
+                });
+              },
+              child: Text("Inscription")
+          ),
         ),
       ],
     );

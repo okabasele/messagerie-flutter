@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'contact.dart';
 import 'model/Utilisateur.dart';
 
-class detail extends StatefulWidget{
+class detail extends StatefulWidget {
   Utilisateur user;
   detail({required Utilisateur this.user});
   @override
@@ -9,39 +10,119 @@ class detail extends StatefulWidget{
     // TODO: implement createState
     return detailState();
   }
-
 }
 
-class detailState extends State<detail>{
+class detailState extends State<detail> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text("${widget.user.prenom}  ${widget.user.nom!}"),
-        centerTitle: true,
-      ),
       body: bodyPage(),
     );
   }
-  Widget bodyPage(){
+
+  Widget bodyPage() {
     return Column(
       children: [
+
+        Stack(
+          children: [
+            //Photo
+            Container(
+              height: MediaQuery.of(context).size.height / 2,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: (widget.user.avatar == null)
+                          ? const NetworkImage(
+                          "https://www.purdue.edu/veterans/about/images/generic_user.png")
+                          : NetworkImage(widget.user.avatar!))),
+            ),
+            //Barre du haut -ajout ami + modifier le profil
+            Container(
+              padding: EdgeInsets.all(20.0),
+              child:Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(10.0),
+                          primary: Color(0xFFFF0844),
+                          shape: CircleBorder(),
+                        elevation: 0
+                      ),
+                      child: Icon(
+                          Icons.person_add_alt_rounded,
+                        size: 30,
+                      ),
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return contact(user: widget.user,);
+                        }));
+                      }),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(10.0),
+                          primary: Color(0xFFFF0844),
+                          shape: CircleBorder(),
+                          elevation: 0
+                      ),
+                      child: Icon(Icons.settings_rounded,
+                        size: 30,
+                      ),
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return contact(user: widget.user,);
+                        }));
+                      }),
+                ],
+              ),
+            ),
+            
+          ],
+        ),
+
+
+        //Information
         Container(
-          height: 150,
-          width: 150,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: (widget.user.avatar==null)
-                  ?const NetworkImage("https://voitures.com/wp-content/uploads/2017/06/Kodiaq_079.jpg.jpg")
-                  :NetworkImage(widget.user.avatar!)
-            )
+          padding: EdgeInsets.all(20.0),
+          alignment: Alignment.centerLeft,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    "${widget.user.prenom} ${widget.user.nom}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                      color: Color(0xFFFF0844),
+                    ),
+                  ),
+                  (widget.user.birthday == null)
+                      ? Text(
+                          ", 21",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                            color: Color(0xFFFF0844),
+                          ),
+                        )
+                      : Text(
+                          ", ${widget.user.birthday}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                            color: Color(0xFFFF0844),
+                          ),
+                        )
+                ],
+              ),
+            ],
           ),
         ),
-        Text("${widget.user.prenom}  ${widget.user.nom}"),
-        (widget.user.birthday==null)?Container():Text(widget.user.birthday.toString())
       ],
     );
   }

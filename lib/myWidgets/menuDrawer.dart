@@ -30,7 +30,7 @@ class myDrawerState extends State<myDrawer>{
         builder: (context){
           if(Platform.isIOS){
             return CupertinoAlertDialog(
-              title: Text("Souhaitez utilser cette photo comme profil ?"),
+              title: Text("Souhaitez-vous utiliser cette photo comme profil?"),
               content: Image.memory(byteData!),
               actions: [
                 ElevatedButton(
@@ -54,7 +54,7 @@ class myDrawerState extends State<myDrawer>{
                     Navigator.pop(context);
                     //enregitrer notre image dans la base de donnée
                   },
-                  child: Text("Enregitrement)"
+                  child: Text("Enregistrement)"
                   ),
                 )
 
@@ -64,7 +64,7 @@ class myDrawerState extends State<myDrawer>{
           else
           {
             return AlertDialog(
-              title: Text("Souhaitez utilser cette photo comme profil ?"),
+              title: Text("Souhaitez-vous utiliser cette photo comme profil?"),
               content: Image.memory(byteData!),
               actions: [
                 ElevatedButton(
@@ -88,7 +88,7 @@ class myDrawerState extends State<myDrawer>{
                     Navigator.pop(context);
                     //enregitrer notre image dans la base de donnée
                   },
-                  child: Text("Enregitrement)"
+                  child: Text("Enregistrement)"
                   ),
                 )
 
