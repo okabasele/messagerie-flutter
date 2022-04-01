@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:messagerie_flutter/myWidgets/popUp.dart';
 import 'dashboard.dart';
 import 'functions/FirestoreHelper.dart';
+import 'model/Utilisateur.dart';
 import 'register.dart';
 
 void main() async {
@@ -42,6 +43,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String mail = "";
   String password = "";
+  Utilisateur? connected;
 
   @override
   Widget build(BuildContext context) {
@@ -169,8 +171,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 FirestoreHelper()
                     .Connect(mail: mail, password: password)
                     .then((value) {
+                  FirestoreHelper().getIdentifiant().then((String identifiant){
+                      FirestoreHelper().getUtilisateur(identifiant).then((Utilisateur user){
+                        setState(() {
+                          connected = user;
+                        });
+                      });
+                  });
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return dashBoard();
+                    return dashBoard(user: connected!,);
                   }));
                 }).catchError((error) {
                   myPopUp(

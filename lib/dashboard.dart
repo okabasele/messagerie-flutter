@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:messagerie_flutter/contact.dart';
-import 'MyWidgets/menuDrawer.dart';
+import 'chat.dart';
 import 'detail.dart';
 import 'discover.dart';
 import 'functions/FirestoreHelper.dart';
 import 'model/Utilisateur.dart';
 
 class dashBoard extends StatefulWidget{
-
+  Utilisateur user;
+  dashBoard({required Utilisateur this.user});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -18,28 +18,17 @@ class dashBoard extends StatefulWidget{
 }
 
 class dashBoardState extends State<dashBoard>{
-  late Utilisateur myProfil;
-  late String uid;
   late List pages;
   int pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    FirestoreHelper().getIdentifiant().then((String identifiant){
-      setState(() {
-        uid = identifiant;
-        FirestoreHelper().getUtilisateur(uid).then((Utilisateur user){
-          setState(() {
-            myProfil = user;
-          });
-        });
-      });
-    });
+
     pages = [
-      contact(user: myProfil),
-      detail(user: myProfil),
-      discover(user: myProfil,)
+      chat(user: widget.user),
+      discover(user: widget.user),
+      detail(user: widget.user),
     ];
 
     return Scaffold(

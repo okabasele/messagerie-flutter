@@ -22,7 +22,7 @@ class discoverState extends State<discover> {
   }
 
   Widget bodyPage(){
-    return Text("");
+    return Text("explorer");
   }
 
 }

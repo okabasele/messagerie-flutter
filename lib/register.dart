@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:messagerie_flutter/dashboard.dart';
 import 'functions/FirestoreHelper.dart';
+import 'model/Utilisateur.dart';
 import 'myWidgets/popUp.dart';
 
 class register extends StatefulWidget{
@@ -18,6 +19,7 @@ class registerState extends State<register>{
   String prenom ="";
   String mail="";
   String password="";
+  Utilisateur? registered;
 
   @override
   Widget build(BuildContext context) {
@@ -175,6 +177,7 @@ class registerState extends State<register>{
         SizedBox(height: 20,),
 
         //Bouton d'inscription
+
         Container(
             width: MediaQuery.of(context).size.width,
             child: ElevatedButton(
@@ -185,19 +188,29 @@ class registerState extends State<register>{
               borderRadius: BorderRadius.circular(10),
               )),
               onPressed: (){
+
                 FirestoreHelper().inscription(mail: mail, password: password, prenom: prenom,nom: nom).then((value) {
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context){
-                        return dashBoard();
-                      }
-                  ));
-                }).catchError((error){
-                  myPopUp(text: "Votre adresse mail est déjà utilisée. Veuillez réessayer.",);
+                  FirestoreHelper().getIdentifiant().then((String identifiant){
+                      FirestoreHelper().getUtilisateur(identifiant).then((Utilisateur user){
+                        setState(() {
+                          registered = user;
+                        });
+                      });
+                  });
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return dashBoard(user: registered!,);
+                  }));
+                }).catchError((error) {
+                  myPopUp(
+                    text:
+                        "Votre adresse mail ou mot de passe est érroné. Veuillez réessayer.",
+                  );
                 });
               },
               child: Text("Inscription")
           ),
         ),
+
       ],
     );
   }

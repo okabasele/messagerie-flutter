@@ -42,26 +42,9 @@ class detailState extends State<detail> {
             //Barre du haut -ajout ami + modifier le profil
             Container(
               padding: EdgeInsets.all(20.0),
-              child:Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(10.0),
-                          primary: Color(0xFFFF0844),
-                          shape: CircleBorder(),
-                        elevation: 0
-                      ),
-                      child: Icon(
-                          Icons.person_add_alt_rounded,
-                        size: 30,
-                      ),
-                      onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return contact(user: widget.user,);
-                        }));
-                      }),
-                  ElevatedButton(
+              child: Container(
+                alignment: AlignmentDirectional.centerEnd,
+                child:ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.all(10.0),
                           primary: Color(0xFFFF0844),
@@ -76,7 +59,6 @@ class detailState extends State<detail> {
                           return contact(user: widget.user,);
                         }));
                       }),
-                ],
               ),
             ),
             
@@ -103,7 +85,7 @@ class detailState extends State<detail> {
                   ),
                   (widget.user.birthday == null)
                       ? Text(
-                          ", 21",
+                          "",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
