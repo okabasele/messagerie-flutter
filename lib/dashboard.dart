@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:messagerie_flutter/contact.dart';
 import 'MyWidgets/menuDrawer.dart';
 import 'detail.dart';
+import 'discover.dart';
 import 'functions/FirestoreHelper.dart';
 import 'model/Utilisateur.dart';
 
@@ -35,12 +37,9 @@ class dashBoardState extends State<dashBoard>{
       });
     });
     pages = [
+      contact(user: myProfil),
       detail(user: myProfil),
-      /*
-      home(),
-      contacts(),
-      discover(),
-       */
+      discover(user: myProfil,)
     ];
 
     return Scaffold(

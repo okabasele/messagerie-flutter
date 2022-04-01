@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'model/Utilisateur.dart';
 
-class contact extends StatefulWidget {
+class discover extends StatefulWidget {
   Utilisateur user;
-  contact({required Utilisateur this.user});
+  discover({required Utilisateur this.user});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return contactState();
+    return discoverState();
   }
 }
 
-class contactState extends State<contact> {
+class discoverState extends State<discover> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
