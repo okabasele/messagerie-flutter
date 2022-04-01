@@ -64,9 +64,11 @@ Future <Utilisateur> getUtilisateur(String uid) async{
       String urlChemin = await download.ref.getDownloadURL();
       return urlChemin;
 
-
 }
 
+  Future deconnect() async {
+    await auth.signOut();
+  }
 
 
 }

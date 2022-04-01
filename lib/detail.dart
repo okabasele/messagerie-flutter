@@ -39,7 +39,7 @@ class detailState extends State<detail> {
                           "https://www.purdue.edu/veterans/about/images/generic_user.png")
                           : NetworkImage(widget.user.avatar!))),
             ),
-            //Barre du haut -ajout ami + modifier le profil
+            //Barre du haut - modifier le profil -deconnexion
             Container(
               padding: EdgeInsets.all(20.0),
               child: Container(
