@@ -9,6 +9,7 @@ import 'model/Utilisateur.dart';
 class dashBoard extends StatefulWidget{
   Utilisateur user;
   dashBoard({required Utilisateur this.user});
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -27,7 +28,7 @@ class dashBoardState extends State<dashBoard>{
 
     pages = [
       chat(user: widget.user),
-      discover(user: widget.user),
+      discover(currentUser: widget.user),
       detail(user: widget.user),
     ];
 

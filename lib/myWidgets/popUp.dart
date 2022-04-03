@@ -1,11 +1,5 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '/functions/FirestoreHelper.dart';
-import '/model/Utilisateur.dart';
-import 'package:file_picker/file_picker.dart';
 
 class myPopUp extends StatefulWidget{
   String text;
