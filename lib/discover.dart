@@ -270,13 +270,12 @@ class discoverState extends State<discover> {
                                         borderRadius: BorderRadius.circular(10),
                                       )),
                                   onPressed: () {
-
                                     //Ajouter un ami a l'utilisateur courant
-                                    List<String> friendsUid = [];
+                                    List friendsUid= [];
                                     if (widget.currentUser.friendsUid==null){
                                       friendsUid.add(users[currentIndex].id);
                                     } else {
-                                     friendsUid = users[currentIndex].friendsUid!;
+                                     friendsUid = users[currentIndex].friendsUid!.toList() ;
                                      friendsUid.add(users[currentIndex].id);
                                     }
 
@@ -287,11 +286,11 @@ class discoverState extends State<discover> {
                                     FirestoreHelper().updateUser(widget.currentUser.id, map);
 
                                     //Ajouter un ami a l'autre utilisateur
-                                    List<String> peerFriendsUid = [];
+                                    List peerFriendsUid = [];
                                     if (users[currentIndex].friendsUid==null){
                                       peerFriendsUid.add(widget.currentUser.id);
                                     } else {
-                                      peerFriendsUid = users[currentIndex].friendsUid!;
+                                      peerFriendsUid = users[currentIndex].friendsUid!.toList();
                                       peerFriendsUid.add(widget.currentUser.id);
                                     }
 

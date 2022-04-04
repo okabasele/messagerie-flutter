@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'contact.dart';
+import 'package:messagerie_flutter/functions/FirestoreHelper.dart';
+import 'package:messagerie_flutter/main.dart';
 import 'model/Utilisateur.dart';
 
 class detail extends StatefulWidget {
@@ -56,7 +57,8 @@ class detailState extends State<detail> {
                       ),
                       onPressed: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return contact(user: widget.user,);
+                          FirestoreHelper().deconnect();
+                          return MyHomePage(title: "");
                         }));
                       }),
               ),
