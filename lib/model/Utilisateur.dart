@@ -8,6 +8,7 @@ class Utilisateur{
   String mail="";
   DateTime? birthday;
   String? avatar;
+  List<String>? friendsUid;
 
 
 
@@ -22,6 +23,7 @@ class Utilisateur{
   mail = map ["MAIL"];
   //birthday = map["BIRTHDAY"];
   avatar = map["AVATAR"];
+  friendsUid = map["FRIENDS_UID"];
 }
 
 

@@ -11,6 +11,7 @@ class FirestoreHelper{
   final auth = FirebaseAuth.instance;
   final fire_user = FirebaseFirestore.instance.collection("Utilisateurs");
   final fireStorage = FirebaseStorage.instance;
+  final fire_conv = FirebaseFirestore.instance.collection("messages");
 
   //Constructeur
 

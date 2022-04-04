@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tindercard/flutter_tindercard.dart';
+import 'package:messagerie_flutter/model/chat_params.dart';
+import 'chat_screen.dart';
 import 'functions/FirestoreHelper.dart';
 import 'model/Utilisateur.dart';
 
@@ -40,41 +42,19 @@ class discoverState extends State<discover> {
             List<Utilisateur> users = [];
             for (var i = 0; i < snapshot.data!.docs.length; i++) {
               Utilisateur user = Utilisateur(snapshot.data!.docs[i]);
-              if (user.id != widget.currentUser.id) {
+              if (user.id != widget.currentUser.id|| widget.currentUser.friendsUid==null || !(widget.currentUser.friendsUid!=null && widget.currentUser.friendsUid!.contains(user.id))) {
                 users.add(user);
               }
             }
-            return contentPage(context, users);
-
-/*
-            List documents = snapshot.data!.docs;
-            return ListView.builder(
-              itemCount: documents.length,
-                itemBuilder: (context,index){
-                Utilisateur user = Utilisateur(documents[index]);
-                  return ListTile(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context){
-                            return detail(user: user);
-                          }
-                      ));
-                    },
-                    title:Text("${user.prenom}"),
-                  );
-                }
-            );
-*/
+            return contentPage(users);
           }
         });
   }
 
-  Widget contentPage(BuildContext context, List<Utilisateur> users) {
+  Widget contentPage(List<Utilisateur> users) {
     CardController controller;
     return Column(
       children: [
-        //Titre
-
         //Cartes
         Container(
           height: MediaQuery.of(context).size.height * 0.6,
@@ -148,6 +128,7 @@ class discoverState extends State<discover> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            //bouton gauche
             Container(
               height: 50,
               width: 50,
@@ -189,6 +170,8 @@ class discoverState extends State<discover> {
                 ),
               ),
             ),
+
+            //bouton droit
             Container(
               height: 50,
               width: 50,
@@ -287,7 +270,41 @@ class discoverState extends State<discover> {
                                         borderRadius: BorderRadius.circular(10),
                                       )),
                                   onPressed: () {
-                                    Navigator.pop(context);
+
+                                    //Ajouter un ami a l'utilisateur courant
+                                    List<String> friendsUid = [];
+                                    if (widget.currentUser.friendsUid==null){
+                                      friendsUid.add(users[currentIndex].id);
+                                    } else {
+                                     friendsUid = users[currentIndex].friendsUid!;
+                                     friendsUid.add(users[currentIndex].id);
+                                    }
+
+                                    print(friendsUid);
+                                    Map<String,dynamic> map ={
+                                      "FRIENDS_UID": friendsUid,
+                                    };
+                                    FirestoreHelper().updateUser(widget.currentUser.id, map);
+
+                                    //Ajouter un ami a l'autre utilisateur
+                                    List<String> peerFriendsUid = [];
+                                    if (users[currentIndex].friendsUid==null){
+                                      peerFriendsUid.add(widget.currentUser.id);
+                                    } else {
+                                      peerFriendsUid = users[currentIndex].friendsUid!;
+                                      peerFriendsUid.add(widget.currentUser.id);
+                                    }
+
+                                    print(peerFriendsUid);
+
+                                    Map<String,dynamic> peerMap ={
+                                      "FRIENDS_UID": peerFriendsUid,
+                                    };
+                                    FirestoreHelper().updateUser(users[currentIndex].id, peerMap);
+
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                      return ChatScreen(chatParams: new ChatParams(widget.currentUser,users[currentIndex]));
+                                    }));
                                   },
                                   child: Text('Dites "Bonjour!"'))
                             ],

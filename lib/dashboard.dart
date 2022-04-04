@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'chat.dart';
+import 'chatList.dart';
 import 'detail.dart';
 import 'discover.dart';
 import 'functions/FirestoreHelper.dart';
@@ -27,7 +27,7 @@ class dashBoardState extends State<dashBoard>{
     // TODO: implement build
 
     pages = [
-      chat(user: widget.user),
+      chatList(user: widget.user),
       discover(currentUser: widget.user),
       detail(user: widget.user),
     ];
@@ -50,26 +50,6 @@ class dashBoardState extends State<dashBoard>{
               body: pages[pageIndex],
               bottomNavigationBar: buildMyNavBar(context),
             );
-            /*
-            List documents = snapshot.data!.docs;
-            return ListView.builder(
-              itemCount: documents.length,
-                itemBuilder: (context,index){
-                Utilisateur user = Utilisateur(documents[index]);
-                  return ListTile(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context){
-                            return detail(user: user);
-                          }
-                      ));
-                    },
-                    title:Text("${user.prenom}"),
-                    trailing: IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
-                  );
-                }
-            );
-            */
           }
         }
     );
