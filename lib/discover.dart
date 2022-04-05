@@ -50,7 +50,6 @@ class discoverState extends State<discover> {
                 }
               }
             }
-            print(users.length);
             return contentPage(users);
           }
         });
@@ -146,7 +145,119 @@ class discoverState extends State<discover> {
                   (CardSwipeOrientation orientation, int index) {
                 /// Get orientation & index of swiped card!
                 currentIndex = index;
-                print("$currentIndex ${orientation.toString()}");
+                if(orientation == CardSwipeOrientation.RIGHT){
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("C'est un match!"),
+                          content: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    width: 3,
+                                    color: Color(0x66FFB099),
+                                    style: BorderStyle.solid,
+                                  ),
+                                  image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: (users[currentIndex].avatar ==
+                                        null)
+                                        ? NetworkImage(
+                                        "https://www.purdue.edu/veterans/about/images/generic_user.png")
+                                        : NetworkImage(
+                                        '${users[currentIndex].avatar}'),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    width: 3,
+                                    color: Color(0x66FFB099),
+                                    style: BorderStyle.solid,
+                                  ),
+                                  image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: (widget.currentUser.avatar == null)
+                                        ? NetworkImage(
+                                        "https://www.purdue.edu/veterans/about/images/generic_user.png")
+                                        : NetworkImage(
+                                        '${widget.currentUser.avatar}'),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          actions: [
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.all(5.0),
+                                    primary: Color(0xFFFF0844),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    )),
+                                onPressed: () {
+                                  //Ajouter un ami a l'utilisateur courant
+                                  List<String>? friendsUid = [];
+                                  if (widget.currentUser.friendsUid == null) {
+                                    friendsUid.add(users[currentIndex].id);
+                                  } else {
+                                    friendsUid =
+                                    users[currentIndex].friendsUid!;
+                                    friendsUid.add(users[currentIndex].id);
+                                  }
+
+                                  print(friendsUid);
+                                  Map<String, dynamic> map = {
+                                    "FRIENDS_UID": friendsUid,
+                                  };
+                                  FirestoreHelper()
+                                      .updateUser(widget.currentUser.id, map);
+
+                                  //Ajouter un ami a l'autre utilisateur
+                                  List<String>? peerFriendsUid = [];
+                                  if (users[currentIndex].friendsUid ==
+                                      null) {
+                                    peerFriendsUid.add(widget.currentUser.id);
+                                  } else {
+                                    peerFriendsUid =
+                                    users[currentIndex].friendsUid!;
+                                    peerFriendsUid.add(widget.currentUser.id);
+                                  }
+
+                                  print(peerFriendsUid);
+
+                                  Map<String, dynamic> peerMap = {
+                                    "FRIENDS_UID": peerFriendsUid,
+                                  };
+                                  FirestoreHelper().updateUser(
+                                      users[currentIndex].id, peerMap);
+
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return ChatScreen(
+                                            chatParams: new ChatParams(
+                                                widget.currentUser,
+                                                users[currentIndex]));
+                                      }));
+                                },
+                                child: Text('Dites "Bonjour!"'))
+                          ],
+                        );
+                      });
+                }
               },
             ),
           ),
@@ -347,14 +458,6 @@ class discoverState extends State<discover> {
                               ],
                             );
                           });
-                      /*
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return detail(
-                        user: Utilisateur(docs[currentIndex]),
-                      );
-                    }));
-                    */
                     },
                   ),
                 ),

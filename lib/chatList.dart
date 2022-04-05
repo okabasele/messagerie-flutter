@@ -17,7 +17,6 @@ class chatList extends StatefulWidget {
 class chatListState extends State<chatList> {
   @override
   Widget build(BuildContext context) {
-    print(widget.user.friendsUid);
     // TODO: implement build
     return Scaffold(
       body: bodyPage(),
@@ -75,6 +74,12 @@ class chatListState extends State<chatList> {
                                 },
                                 child: Card(
                                     child: ListTile(
+                                      leading:CircleAvatar(
+                                        backgroundImage: (peer.avatar == null)
+                                            ? const NetworkImage(
+                                            "https://www.purdue.edu/veterans/about/images/generic_user.png")
+                                            : NetworkImage(peer.avatar!),
+                                      ),
                                       title: Text(peer.prenom + " " + peer.nom!),
                                     ),
                                 ),

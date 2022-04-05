@@ -53,7 +53,9 @@ class _ChatState extends State<Chat> {
     return Stack(
       children: [
         Column(
-          children: [buildListMessage(), buildInput()],
+          children: [
+            buildListMessage(),
+            buildInput()],
         ),
         isLoading ? Loading() : Container()
       ],

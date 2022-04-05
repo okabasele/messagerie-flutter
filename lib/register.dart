@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:messagerie_flutter/dashboard.dart';
+import 'package:messagerie_flutter/main.dart';
 import 'functions/FirestoreHelper.dart';
 import 'model/Utilisateur.dart';
 import 'myWidgets/popUp.dart';
@@ -198,7 +198,7 @@ class registerState extends State<register>{
                       });
                   });
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return dashBoard(user: registered!,);
+                    return MyHomePage(title: '');
                   }));
                 }).catchError((error) {
                   myPopUp(

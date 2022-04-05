@@ -10,6 +10,7 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       backgroundColor: Colors.white,
       appBar: AppBar(
           leading: IconButton(
@@ -18,7 +19,7 @@ class ChatScreen extends StatelessWidget {
               return dashBoard(user: chatParams.user);
             })),
           ),
-          backgroundColor: Color(0x66FFB099),
+          backgroundColor: Colors.white,
           elevation: 0.0,
           title: Text(chatParams.peer.prenom +" "+chatParams.peer.nom!,
           style: TextStyle(
@@ -26,7 +27,15 @@ class ChatScreen extends StatelessWidget {
           ),
           )
       ),
-      body: Chat(chatParams:chatParams),
+      body:  Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Chat(chatParams:chatParams),
+      ),
     );
   }
 }
