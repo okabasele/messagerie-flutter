@@ -25,7 +25,6 @@ class detailState extends State<detail> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    print(widget.user.avatar);
     return Scaffold(
       body: bodyPage(),
     );

@@ -8,7 +8,7 @@ class Utilisateur{
   String mail="";
   DateTime? birthday;
   String? avatar;
-  List<String>? friendsUid;
+  List? friendsUid;
 
 
 
@@ -23,7 +23,7 @@ class Utilisateur{
   mail = map["MAIL"];
   //birthday = map["BIRTHDAY"];
   avatar = map["AVATAR"];
-  friendsUid = List<String>.from(map["FRIENDS_UID"]);
+  friendsUid = map["FRIENDS_UID"];
 }
 
 
